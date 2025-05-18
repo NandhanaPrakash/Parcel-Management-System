@@ -1,0 +1,557 @@
+<!-- update_status.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Order Status</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .dispatch-status {
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .dispatch-status h3 {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .dispatch-status input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .dispatch-status input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        
+        .route-status {
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .route-status h3 {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .form-group input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .form-group input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        
+        .message {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .sidebar {
+            position: fixed;
+            height: 100%;
+            width: 260px;
+            background:#050505;
+            padding: 15px;
+            z-index: 99;
+        }
+
+        .logo {
+            font-size: 25px;
+            padding: 0 15px;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .menu-content {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            margin-top: 40px;
+            overflow-y: scroll;
+        }
+
+        .menu-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .menu-items {
+            height: 100%;
+            width: 100%;
+            list-style: none;
+            transition: all 0.4s ease;
+        }
+
+        .submenu-active .menu-items {
+            transform: translateX(-56%);
+        }
+
+        .menu-title {
+            color: #fff;
+            font-size: 14px;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .item a,
+        .submenu-item {
+            padding: 16px;
+            display: inline-block;
+            width: 100%;
+            border-radius: 12px;
+        }
+
+        .item i {
+            font-size: 12px;
+        }
+
+        .item a:hover,
+        .submenu-item:hover,
+        .submenu .menu-title:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .submenu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .submenu {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            right: calc(-100% - 26px);
+            height: calc(100% + 100vh);
+            background: #11101d;
+            display: none;
+        }
+
+        .show-submenu ~ .submenu {
+            display: block;
+        }
+
+        .submenu .menu-title {
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .submenu .menu-title i {
+            margin-right: 10px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .dispatch-status {
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .dispatch-status h3 {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .dispatch-status input[type="submit"] {
+            background-color: #050505;
+            
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .dispatch-status input[type="submit"]:hover {
+            background-color: #050505
+        }
+
+        .route-status {
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .route-status h3 {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group input[type="submit"] {
+            background-color:#050505;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background-color: #050505;
+        }
+
+        .message {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Added styles for the three-line button */
+        .menu-toggle {
+            position: fixed;
+            top: 18px;
+            right: 1125px;
+            width: 30px;
+            height: 30px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 80%;
+            height: 3px;
+            background: #11101d;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 32px;
+            color: #fff;
+        }
+        .w3-display-container {
+            background-color: #050505;
+            top:0;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 10;
+        }
+
+        nav {
+            background-color: #050505;
+            padding: 10px;
+            font-size: 1.2rem;
+            margin-bottom: 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+        }
+
+        nav ul li a {
+            color: #fff8f8;
+            text-decoration: none;
+            padding: 0 10px;
+            margin: 0 20px;
+            cursor: pointer;
+        }
+
+        nav ul li:after {
+            content: '';
+            width: 0;
+            height: 3px;
+            background: #f8f4f4;
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            transition: 0.5s;
+        }
+
+        nav ul li:hover::after {
+            width: 100%;
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- Add the button inside the body -->
+    <div class="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="sidebar">
+        <div class="logo">Dashboard</div>
+        <div class="menu-content">
+            <ul class="menu-items">
+                <li class="item">
+                    <a href="#">View Customer Profile</a>
+                </li>
+                <li class="item">
+                    <a href="#">View Date Orders</a>
+                </li>
+                <li class="item">
+                    <a href="#">Update Status</a>
+                </li>                
+            </ul>
+        </div>
+    </div>
+
+    <header>
+        <div class="w3-display-container w3-content w3-wide" style="max-width:1500px;">
+            <h1 class="dashboard-title"><b>Bunzo Delivery</b></h1>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="index/">Login/Signup</a></li>
+            <li><a href="#about">About us</a></li>
+            <li><a href="#branch-office">Branch Offices</a></li>
+        </ul>
+    </nav>
+
+    <br>
+    <br>
+
+    <div class="container">
+        <h1>Update Order Status</h1>
+        
+        <!-- Display message if any -->
+        {% if message %}
+            <p class="message">{{ message }}</p>
+        {% endif %}
+        
+        <div class="dispatch-status">
+            <h3>Dispatch Order</h3>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="option" value="1">
+                <input type="submit" value="Dispatch">
+            </form>
+        </div>
+        
+        {% if order_details %}
+        <div class="route-status">
+            <h3>Update Route Status</h3>
+            <form id="update-status-form" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="option" value="2">
+                <div class="form-group">
+                    <label for="order_id">Order ID:</label>
+                    <select name="order_id" id="order_id">
+                        {% for order_id, status in order_details.items %}
+                            {% if status.6 == 'Dispatched' %}
+                                <option value="{{ order_id }}">{{ order_id }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="office">Office:</label>
+                    <select name="office" id="office">
+                        <!-- Options will be dynamically populated -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="status">Route Status:</label>
+                    <select name="status" id="status">
+                        <option value="Not Reached">Not Reached</option>
+                        <option value="Reached">Reached</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Update Status">
+                </div>
+            </form>
+        {% endif %}
+        </div>                
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // JavaScript code for toggling the sidebar
+        const menuToggle = document.querySelector(".menu-toggle");
+        const sidebar = document.querySelector(".sidebar");
+        const menu = document.querySelector(".menu-content");
+    
+        menuToggle.addEventListener("click", () => {
+            sidebar.classList.toggle("close");
+            menu.classList.remove("submenu-active");
+        });
+    
+        const menuItems = document.querySelectorAll(".submenu-item");
+        const subMenuTitles = document.querySelectorAll(".submenu .menu-title");
+    
+        menuItems.forEach((item) => {
+            item.addEventListener("click", () => {
+                menu.classList.add("submenu-active");
+                item.classList.add("show-submenu");
+                menuItems.forEach((item2) => {
+                    if (item !== item2) {
+                        item2.classList.remove("show-submenu");
+                    }
+                });
+            });
+        });
+    
+        subMenuTitles.forEach((title) => {
+            title.addEventListener("click", () => {
+                menu.classList.remove("submenu-active");
+            });
+        });
+    </script>
+    
+    <script>
+        // AJAX request to fetch routes based on selected order ID
+        $(document).ready(function() {
+            $('#order_id').change(function() {
+                var selectedOrderId = $(this).val();
+
+                $.ajax({
+                    url: '/get_routes/',  // Update the URL with the appropriate endpoint to fetch routes
+                    method: 'GET',
+                    data: {
+                        order_id: selectedOrderId
+                    },
+                    success: function(response) {
+                        var routes = response.routes;
+                        var officeSelect = $('#office');
+
+                        // Clear previous options
+                        officeSelect.empty();
+
+                        // Add new options based on fetched routes
+                        for (var office in routes) {
+                            if (routes.hasOwnProperty(office)) {
+                                var option = $('<option>').val(office).text(office);
+                                officeSelect.append(option);
+                            }
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            });
+
+            // Trigger change event on page load to populate office field if order ID is pre-selected
+            $('#order_id').trigger('change');
+        });
+    </script>
+</body>
+</html>
+
+ 

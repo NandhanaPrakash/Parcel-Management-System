@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 32px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Employee Page</h1>
+
+    <form action="{% url 'orders' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="choice" value="1">
+        <input type="submit" value="View Orders">
+    </form>
+
+    <br>
+
+</body>
+</html>

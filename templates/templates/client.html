@@ -1,0 +1,244 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Client Page</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            display: grid;
+            height: 100%;
+            width: 100%;
+            place-items: center;
+            background: url("{% static 'templates/login.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+        
+        ::selection {
+            background:#0c0c0cfd;
+            color: #fff;
+        }
+        
+        .container {
+            width: 380px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
+        }
+        
+        .container .title {
+            font-size: 35px;
+            font-weight: 600;
+            text-align: center;
+            line-height: 100px;
+            color: #fff;
+            user-select: none;
+            border-radius: 15px 15px 0 0;
+            background: linear-gradient(-135deg, #fcce04, #fcce04);
+        }
+        
+        .container form {
+            padding: 10px 30px 50px 30px;
+        }
+        
+        .container form .field {
+            height: 50px;
+            width: 100%;
+            margin-top: 20px;
+            position: relative;
+        }
+        
+        .container form .field input {
+            height: 100%;
+            width: 100%;
+            outline: none;
+            font-size: 17px;
+            padding-left: 20px;
+            border: 1px solid lightgrey;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .container form .field input:focus,
+        .container form .field input:valid {
+            border-color: #0c0c0cfd;
+        }
+        
+        .container form .field label {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            color: #999999;
+            font-weight: 400;
+            font-size: 17px;
+            pointer-events: none;
+            transform: translateY(-50%);
+            transition: all 0.3s ease;
+        }
+        
+        .container form .field input:focus ~ label,
+        .container form .field input:valid ~ label {
+            top: 0%;
+            font-size: 16px;
+            color: #0c0c0cfd;
+            background: #fff;
+            transform: translateY(-50%);
+        }
+        
+        .container form .content {
+            display: flex;
+            width: 100%;
+            height: 50px;
+            font-size: 16px;
+            align-items: center;
+            justify-content: space-around;
+        }
+        
+        .container form .content .checkbox {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container form .content input {
+            width: 15px;
+            height: 15px;
+            background: red;
+        }
+        
+        .container form .content label {
+            color: #262626;
+            user-select: none;
+            padding-left: 5px;
+        }
+        
+        .container form .content .pass-link {
+            color: "";
+        }
+        
+        .container form .field input[type="submit"] {
+            color: #fff;
+            border: none;
+            padding-left: 0;
+            margin-top: -10px;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            background: linear-gradient(-135deg, #fcce04, #fcce04);
+            transition: all 0.3s ease;
+        }
+        
+        .container form .field input[type="submit"]:active {
+            transform: scale(0.95);
+        }
+        
+        .container form .signup-link {
+            color: #262626;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .container form .pass-link a,
+        .container form .signup-link a {
+            color: #0c0c0cfd;
+            text-decoration: none;
+        }
+        
+        .container form .pass-link a:hover,
+        .container form .signup-link a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Additional styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 32px;
+            color: #333;
+        }
+
+        .error-message {
+            color: red;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 200px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="title">Login</div>
+        <form method="post" action="{% url 'client_login' %}">
+            {% csrf_token %}
+            <input type="hidden" name="choice" value="1">
+            <div class="field">
+                <input type="email" name="email" placeholder="Email" required>
+                <label for="email">Email</label>
+            </div>
+            <div class="field">
+                <input type="password" name="password" placeholder="Password" required>
+                <label for="password">Password</label>
+            </div>
+            <div class="content">
+                <div class="checkbox">
+                    <input type="checkbox">
+                    <label for="">Remember me</label>
+                </div>
+                <div class="pass-link">
+                    <a href="#">Forgot password?</a>
+                </div>
+            </div>
+            <div class="field">
+                <input type="submit" value="Login">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

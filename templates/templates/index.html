@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bunzo</title>
+<style>
+    /* Add your custom styles here */
+    body {
+        font-family: 'ComicSans',sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .w3-top .w3-bar {
+        background-color: #fcfafa;
+        color: #050505;
+        padding: 10px;
+        text-align: center;
+        margin-bottom: 0;
+    }
+    .w3-top .w3-bar .w3-button {
+        font-size: 1.2rem;
+    }
+    header {
+        background-color: #050505;
+        color: #050505;
+        padding: 10px;
+        text-align: center;
+        margin-bottom: 0;
+    }
+    nav {
+        background-color: #0a0a0a;
+        padding: 10px;
+        font-size: 1.2rem;
+        margin-bottom: 0;
+    }
+    nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    nav ul li {
+        display: inline-block;
+        margin-right: 10px;
+        position: relative;
+    }
+    nav ul li a {
+        color: #fff8f8;
+        text-decoration: none;
+        padding: 0 10px;
+        margin: 0 20px;
+        cursor: pointer;
+    }
+    nav ul li:after {
+        content: '';
+        width: 0;
+        height: 3px;
+        background: #f8f4f4;
+        position: absolute;
+        left: 0;
+        bottom: -10px;
+        transition: 0.5s;
+    }
+    nav ul li:hover::after {
+        width: 100%;
+    }
+    .content {
+        padding: 20px;
+    }
+    
+    /* Styles from the W3.CSS template */
+    .w3-top .w3-bar {
+        background-color: #ffffff;
+        color: #050505;
+        padding: 10px;
+        text-align: center;
+    }
+    .w3-top .w3-bar .w3-button {
+        font-size: 1.2rem;
+    }
+    header {
+        background-color: #0a0a0a;
+        color: #fffcfc;
+        padding: 10px;
+        text-align: center;
+    }
+    header .w3-text-light-grey {
+        color: #fdf906;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin-top: -100px;
+    }
+
+    .button-box {
+        background-color: #fffefe;
+        padding: 20px;
+        border-radius: 5px;
+        text-align: center;
+        border: 1px solid #000;
+    }
+
+    .button-container h1 {
+        font-family: 'Pacifico', cursive;
+        font-size: 32px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .button-container a {
+        display: inline-block;
+        font-family: 'Arial', sans-serif;
+        font-size: 18px;
+        color: #555;
+        text-decoration: none;
+        padding: 10px 20px;
+        margin: 10px;
+        border: 2px solid #555;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        background-color: #fff;
+    }
+
+    .button-container a:hover {
+        background-color: #555;
+        color: #fff;
+    }
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+<header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
+    <h1><b>Bunzo Delivery</b></h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="homepage/">Home</a></li>
+        <li><a href="index/">Login/Signup</a></li>
+        <li><a href="#about">About us</a></li>
+        <li><a href="#branch-office">Branch Offices</a></li>
+    </ul>
+</nav>
+<div class="content">
+    <div class="button-container">
+        <div class="button-box">
+            <h1>Are you Customer, Employee, or Administrator?</h1>
+            <div>
+                <a href="customer/">Customer</a>
+                <a href="employee/">Employee</a>
+                <a href="client/">Administrator</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

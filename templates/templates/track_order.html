@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Track Order</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 200px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #050505;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 20px;
+        }
+
+        .order-details {
+            margin-top: 30px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: left;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .order-details h2 {
+            margin-bottom: 10px;
+        }
+
+        .order-details p {
+            margin: 8px 0;
+        }
+
+        .w3-top .w3-bar {
+            background-color: #ffffff;
+            color: #050505;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        .w3-top .w3-bar .w3-button {
+            font-size: 1.2rem;
+        }
+
+        header {
+            background-color: #050505;
+            top:0;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 10;
+        }
+
+        nav {
+            background-color: #050505;
+            padding: 10px;
+            font-size: 1.2rem;
+            margin-bottom: 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+        }
+
+        nav ul li a {
+            color: #fff8f8;
+            text-decoration: none;
+            padding: 0 10px;
+            margin: 0 20px;
+            cursor: pointer;
+        }
+
+        nav ul li:after {
+            content: '';
+            width: 0;
+            height: 3px;
+            background: #f8f4f4;
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            transition: 0.5s;
+        }
+
+        nav ul li:hover::after {
+            width: 100%;
+        }
+
+        .dashboard-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 32px;
+            color: #fff;
+        }
+
+        /* Added styles for the three-line button */
+        .menu-toggle {
+            position: fixed;
+            top: 18px;
+            right: 1125px;
+            width: 30px;
+            height: 30px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 80%;
+            height: 3px;
+            background: #11101d;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+        .logo {
+            font-size: 25px;
+            padding: 0 15px;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .menu-content {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            margin-top: 40px;
+            overflow-y: scroll;
+        }
+
+        .menu-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .menu-items {
+            height: 100%;
+            width: 100%;
+            list-style: none;
+            transition: all 0.4s ease;
+        }
+
+        .submenu-active .menu-items {
+            transform: translateX(-56%);
+        }
+
+        .menu-title {
+            color: #fff;
+            font-size: 14px;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .item a,
+        .submenu-item {
+            padding: 16px;
+            display: inline-block;
+            width: 100%;
+            border-radius: 12px;
+        }
+
+        .item i {
+            font-size: 12px;
+        }
+
+        .item a:hover,
+        .submenu-item:hover,
+        .submenu .menu-title:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .submenu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .submenu {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            right: calc(-100% - 26px);
+            height: calc(100% + 100vh);
+            background: #11101d;
+            display: none;
+        }
+
+        .show-submenu ~ .submenu {
+            display: block;
+        }
+
+        .submenu .menu-title {
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .submenu .menu-title i {
+            margin-right: 10px;
+        }
+        .w3-top {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 999;
+        }
+
+        .w3-bar {
+            background-color: #ffffff;
+            color: #050505;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 220px;
+            background: #050505;
+            padding: 15px;
+            z-index: 99;
+        }
+        .w3-display-container {
+            background-color: #050505;
+            top:0;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 10;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="sidebar">
+        <div class="logo">Dashboard</div>
+        <div class="menu-content">
+            <ul class="menu-items">
+                <li class="item">
+                    <a href="#">Place Order</a>
+                </li>
+                <li class="item">
+                    <a href="#">Track Order</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <header>
+        <div class="w3-display-container w3-content w3-wide" style="max-width:1500px;">
+            <h1 class="dashboard-title"><b>Bunzo Delivery</b></h1>
+        </div>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="index/">Login/Signup</a></li>
+            <li><a href="#about">About us</a></li>
+            <li><a href="#branch-office">Branch Offices</a></li>
+        </ul>
+    </nav>
+    <br>
+    <br>
+
+    <h1>Track Order</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="text" name="order_id" placeholder="Order ID" required>
+        <br>
+        <input type="submit" value="Track">
+    </form>
+    
+    {% if error_message %}
+    <p class="error-message">{{ error_message }}</p>
+    {% endif %}
+    
+    {% if order_details %}
+    <div class="order-details">
+        <h2>Order Details</h2>
+        <p><strong>Order ID:</strong> {{ order_id }}</p>
+        <p><strong>Name:</strong> {{ order_details.0 }}</p>
+        <p><strong>Sender's Address:</strong> {{ order_details.1 }}</p>
+        <p><strong>Item:</strong> {{ order_details.2 }}</p>
+        <p><strong>Receiver's Address:</strong> {{ order_details.3 }}</p>
+        <p><strong>Phone No:</strong> {{ order_details.4 }}</p>
+        <p><strong>Date:</strong> {{ order_details.5 }}</p>
+        <p><strong>Status:</strong> {{ order_details.6 }}</p>
+        <p><strong>Route:</strong></p>
+        <ul>
+            {% for branch, status in order_details.8.items %}
+                <li><strong>{{ branch }}:</strong> {{ status }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+     
+    
+    
+    
+</body>
+</html>

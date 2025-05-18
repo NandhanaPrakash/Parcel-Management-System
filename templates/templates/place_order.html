@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Place Order</title>
+    <style>
+        /* Import Google font - Poppins */
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .sidebar {
+            position: fixed;
+            height: 100%;
+            width: 260px;
+            background:#050505;
+            padding: 15px;
+            z-index: 99;
+        }
+
+        .logo {
+            font-size: 25px;
+            padding: 0 15px;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .menu-content {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            margin-top: 40px;
+            overflow-y: scroll;
+        }
+
+        .menu-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .menu-items {
+            height: 100%;
+            width: 100%;
+            list-style: none;
+            transition: all 0.4s ease;
+        }
+
+        .submenu-active .menu-items {
+            transform: translateX(-56%);
+        }
+
+        .menu-title {
+            color: #fff;
+            font-size: 14px;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .item a,
+        .submenu-item {
+            padding: 16px;
+            display: inline-block;
+            width: 100%;
+            border-radius: 12px;
+        }
+
+        .item i {
+            font-size: 12px;
+        }
+
+        .item a:hover,
+        .submenu-item:hover,
+        .submenu .menu-title:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .submenu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .submenu {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            right: calc(-100% - 26px);
+            height: calc(100% + 100vh);
+            background: #11101d;
+            display: none;
+        }
+
+        .show-submenu ~ .submenu {
+            display: block;
+        }
+
+        .submenu .menu-title {
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .submenu .menu-title i {
+            margin-right: 10px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color:#050505;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #050505;
+        }
+
+        .order-group {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .order-group h3 {
+            margin-top: 0;
+        }
+
+        .w3-top .w3-bar {
+            background-color: #ffffff;
+            color: #050505;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        .w3-top .w3-bar .w3-button {
+            font-size: 1.2rem;
+        }
+
+        header {
+            background-color: #050505;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        nav {
+            background-color: #050505;
+            padding: 10px;
+            font-size: 1.2rem;
+            margin-bottom: 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+        }
+
+        nav ul li a {
+            color: #fff8f8;
+            text-decoration: none;
+            padding: 0 10px;
+            margin: 0 20px;
+            cursor: pointer;
+        }
+
+        nav ul li:after {
+            content: '';
+            width: 0;
+            height: 3px;
+            background: #f8f4f4;
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            transition: 0.5s;
+        }
+
+        nav ul li:hover::after {
+            width: 100%;
+        }
+
+        .dashboard-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 32px;
+            color: #fff;
+        }
+
+        /* Added styles for the three-line button */
+        .menu-toggle {
+            position: fixed;
+            top: 18px;
+            right: 1125px;
+            width: 30px;
+            height: 30px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 80%;
+            height: 3px;
+            background: #11101d;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+
+        /* Rest of the CSS styles */
+
+        /* ... */
+
+    </style>
+</head>
+<body>
+    <!-- Add the button inside the body -->
+    <div class="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="sidebar">
+        <div class="logo">Dashboard</div>
+        <div class="menu-content">
+            <ul class="menu-items">
+                <li class="item">
+                    <a href="#">Place Order</a>
+                </li>
+                <li class="item">
+                    <a href="#">Track Order</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <header>
+        <div class="w3-display-container w3-content w3-wide" style="max-width:1500px;">
+            <h1 class="dashboard-title"><b>Bunzo Delivery</b></h1>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="index/">Login/Signup</a></li>
+            <li><a href="#about">About us</a></li>
+            <li><a href="#branch-office">Branch Offices</a></li>
+        </ul>
+    </nav>
+
+    <br>
+    <br>
+
+    <div class="container">
+        <h1>Place Your Order</h1>
+        <form action="{% url 'place_order' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="phone_no">Phone Number:</label>
+                <input type="text" name="phone_no" required>
+            </div>
+            <div class="form-group">
+                <label for="send_address">Sender Address:</label>
+                <div class="form-group">
+                    <label for="send_house_no">House No.:</label>
+                    <input type="text" name="send_house_no" required>
+                </div>
+                <div class="form-group">
+                    <label for="send_street_name">Street Name:</label>
+                    <input type="text" name="send_street_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="send_locality">Locality:</label>
+                    <input type="text" name="send_locality" required>
+                </div>
+                <div class="form-group">
+                    <label for="send_pincode">Pincode:</label>
+                    <input type="text" name="send_pincode" required>
+                </div>
+                <div class="form-group">
+                    <label for="send_city">City:</label>
+                    <input type="text" name="send_city" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="num_orders">Number of Orders:</label>
+                <input type="number" name="num_orders" id="num_orders" required>
+            </div>
+            <div id="order-details"></div>
+
+            <input type="submit" value="Place Order">
+        </form>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        // JavaScript code for toggling the sidebar
+        const menuToggle = document.querySelector(".menu-toggle");
+        const sidebar = document.querySelector(".sidebar");
+        const menu = document.querySelector(".menu-content");
+    
+        menuToggle.addEventListener("click", () => {
+            sidebar.classList.toggle("close");
+            menu.classList.remove("submenu-active");
+        });
+    
+        const menuItems = document.querySelectorAll(".submenu-item");
+        const subMenuTitles = document.querySelectorAll(".submenu .menu-title");
+    
+        menuItems.forEach((item) => {
+            item.addEventListener("click", () => {
+                menu.classList.add("submenu-active");
+                item.classList.add("show-submenu");
+                menuItems.forEach((item2) => {
+                    if (item !== item2) {
+                        item2.classList.remove("show-submenu");
+                    }
+                });
+            });
+        });
+    
+        subMenuTitles.forEach((title) => {
+            title.addEventListener("click", () => {
+                menu.classList.remove("submenu-active");
+            });
+        });
+    </script>
+    
+    <script>
+        // Dynamically generate order detail fields based on the number of orders
+        const numOrdersInput = document.getElementById('num_orders');
+        const orderDetailsContainer = document.getElementById('order-details');
+
+        numOrdersInput.addEventListener('input', function () {
+            const numOrders = parseInt(this.value);
+
+            orderDetailsContainer.innerHTML = '';
+
+            for (let i = 0; i < numOrders; i++) {
+                const orderNumber = i + 1;
+                const orderGroup = document.createElement('div');
+                orderGroup.className = 'order-group';
+
+                const orderDetailsHTML = `
+                    <h3>Order ${orderNumber}:</h3>
+                    <div class="form-group">
+                        <label for="rec_house_no_${i}">House No.:</label>
+                        <input type="text" name="rec_house_no_${i}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rec_street_name_${i}">Street Name:</label>
+                        <input type="text" name="rec_street_name_${i}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rec_locality_${i}">Locality:</label>
+                        <input type="text" name="rec_locality_${i}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rec_pincode_${i}">Pincode:</label>
+                        <input type="text" name="rec_pincode_${i}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rec_city_${i}">City:</label>
+                        <input type="text" name="rec_city_${i}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="priority_${i}">Does your item come under Aadhar, PAN, Credit Card, etc. (Extra charges applicable)?</label>
+                        <select name="priority_${i}" required>
+                            <option value="low">No</option>
+                            <option value="high">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="item_${i}">Item:</label>
+                        <input type="text" name="item_${i}" required>
+                    </div>
+                `;
+
+                orderGroup.innerHTML = orderDetailsHTML;
+                orderDetailsContainer.appendChild(orderGroup);
+            }
+        });
+    </script>
+</body>
+</html>

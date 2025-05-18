@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Client Login</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 32px;
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 200px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Client Login</h1>
+    <form action="{% url 'client_login' %}" method="POST">
+        {% csrf_token %}
+        {% if error_message %}
+            <p id="error-message">{{ error_message }}</p>
+        {% endif %}
+        <input type="email" name="email" placeholder="Email" required>
+        <br>
+        <input type="password" name="password" placeholder="Password" required>
+        <br>
+        <input type="submit" value="Log In">
+    </form>
+    <script>
+        // Hide the error message after a certain time interval
+        setTimeout(function() {
+            document.getElementById("error-message").style.display = "none";
+        }, 3000);
+    </script>
+</body>
+</html>

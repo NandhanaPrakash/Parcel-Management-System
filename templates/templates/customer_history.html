@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer History</title>
+    <style>
+        /* Import Google font - Poppins */
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            color: red;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333333;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 3px;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #050505;
+            color: #ffffff;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #050505;
+        }
+
+        p {
+            font-size: 16px;
+            color: #666666;
+        }
+
+        a {
+            color: #fdfdfd;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        .customer-details {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .customer-details h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .customer-details ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .customer-details ul li {
+            margin-bottom: 5px;
+        }
+
+        .customer-orders {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .customer-orders h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .customer-orders ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .customer-orders ul li {
+            margin-bottom: 5px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #050505;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .dashboard-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 32px;
+            color: #fff;
+        }
+
+        /* Navigation Styles */
+        nav {
+            background-color: #050505;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            font-size: 18px;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 260px;
+            background: #050505;
+            padding: 15px;
+            z-index: 99;
+        }
+
+        .logo {
+            font-size: 25px;
+            padding: 0 15px;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .menu-content {
+            margin-top: 40px;
+            overflow-y: scroll;
+            height: calc(100% - 40px);
+        }
+
+        .menu-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .menu-items {
+            list-style: none;
+            transition: all 0.4s ease;
+        }
+
+        .submenu-active .menu-items {
+            transform: translateX(-56%);
+        }
+
+        .menu-title {
+            color: #fff;
+            font-size: 14px;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .item a,
+        .submenu-item {
+            padding: 16px;
+            display: inline-block;
+            width: 100%;
+            border-radius: 12px;
+        }
+
+        .item i {
+            font-size: 12px;
+        }
+
+        .item a:hover,
+        .submenu-item:hover,
+        .submenu .menu-title:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .submenu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .submenu {
+            position: absolute;
+            top: 0;
+            right: -260px;
+            height: 100%;
+            width: 260px;
+            background: #11101d;
+            display: none;
+        }
+
+        .show-submenu ~ .submenu {
+            display: block;
+        }
+
+        .submenu .menu-title {
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .submenu .menu-title i {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Add the button inside the body -->
+    <div class="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="sidebar">
+        <div class="logo">Dashboard</div>
+        <div class="menu-content">
+            <ul class="menu-items">
+                <li class="item">
+                    <a href="#">View Customer History</a>
+                </li>
+                <li class="item">
+                    <a href="#">View Date Orders</a>
+                </li>
+                <li class="item">
+                    <a href="#">Update status</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <header>
+        <div class="w3-display-container w3-content w3-wide" style="max-width:1500px;">
+            <h1 class="dashboard-title"><b>Bunzo Delivery</b></h1>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="index/">Login/Signup</a></li>
+            <li><a href="#about">About us</a></li>
+            <li><a href="#branch-office">Branch Offices</a></li>
+        </ul>
+    </nav>
+
+    <br>
+    <br>
+
+    <h1>Customer History</h1>
+
+    {% if error_message %}
+    <p class="error-message">{{ error_message }}</p>
+    {% endif %}
+
+    <div class="form-container">
+        <form method="post" action="{% url 'customer_history' %}">
+            {% csrf_token %}
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <br><br>
+            <input type="submit" value="View History">
+        </form>
+    </div>
+
+    <br>
+
+    {% if customer %}
+    <div class="customer-details">
+        <h2>Customer Details:</h2>
+        <ul>
+            <li><strong>Name:</strong> {{ customer.name }}</li>
+            <li><strong>Address:</strong> {{ customer.address }}</li>
+            <li><strong>Phone:</strong> {{ customer.phone }}</li>
+        </ul>
+    </div>
+
+    {% if prev_orders %}
+    <div class="customer-orders">
+        <h2>Previous Orders:</h2>
+        <ul>
+            {% for order in prev_orders %}
+            <li>{{ order }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {% endif %}
+
+    <br>
+
+    <a href="{% url 'index' %}">Go back to Homepage</a>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        // JavaScript code for toggling the sidebar
+        const menuToggle = document.querySelector(".menu-toggle");
+        const sidebar = document.querySelector(".sidebar");
+        const menu = document.querySelector(".menu-content");
+
+        menuToggle.addEventListener("click", () => {
+            sidebar.classList.toggle("close");
+            menu.classList.remove("submenu-active");
+        });
+
+        const menuItems = document.querySelectorAll(".submenu-item");
+        const subMenuTitles = document.querySelectorAll(".submenu .menu-title");
+
+        menuItems.forEach((item) => {
+            item.addEventListener("click", () => {
+                menu.classList.add("submenu-active");
+                item.classList.add("show-submenu");
+                menuItems.forEach((item2) => {
+                    if (item !== item2) {
+                        item2.classList.remove("show-submenu");
+                    }
+                });
+            });
+        });
+
+        subMenuTitles.forEach((title) => {
+            title.addEventListener("click", () => {
+                menu.classList.remove("submenu-active");
+            });
+        });
+    </script>
+</body>
+</html>

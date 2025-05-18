@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 32px;
+            color: #333;
+        }
+
+        form {
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .error-message {
+            color: red;
+        }
+
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Customer Page</h1>
+    <form action="{% url 'login_or_create_account' %}" method="POST">
+        {% csrf_token %}
+        <h2>Login or Create Account</h2>
+        <label for="choice">Select an option:</label>
+        <select name="choice" id="choice">
+            <option value="1">Log in</option>
+            <option value="2">Create an account</option>
+        </select>
+        <br><br>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required>
+        <br><br>
+        {% if choice == '2' %}
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required>
+        <br><br>
+        <label for="phoneno">Phone Number:</label>
+        <input type="text" name="phoneno" id="phoneno" required>
+        <br><br>
+        <label for="address">Address:</label>
+        <input type="text" name="address" id="address" required>
+        <br><br>
+        {% endif %}
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required>
+        <br><br>
+        <input type="submit" value="Submit">
+    </form>
+    {% if error_message %}
+    <p class="error-message">{{ error_message }}</p>
+    {% endif %}
+</body>
+</html>
